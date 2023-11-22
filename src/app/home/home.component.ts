@@ -29,17 +29,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.searchResults$.pipe(takeUntil(this.destroy$), filter((data) => !!data)).subscribe((data) => {
-      const cacheKey = this.githubSearchService.cacheKey(
-        this.searchTerm$.getValue(),
-        this.currentPage$.getValue(),
-        this.itemsPerPage
-      );
-
       if (!data) {
         return;
       }
 
-      this.githubSearchService.cache[cacheKey] = data;
+      this.githubSearchService.cache[this.cacheKey] = data;
     });
   }
 
@@ -66,5 +60,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       const previousPage = this.currentPage$.value - 1;
       this.currentPage$.next(previousPage);
     }
+  }
+
+  private get cacheKey() {
+    return this.githubSearchService.cacheKey(this.searchTerm$.getValue(), this.currentPage$.getValue(),this.itemsPerPage);
   }
 }
