@@ -1,0 +1,17 @@
+<app-search (search)="onSearch()" (termChanges)="onSearchTermChanges($event)">
+</app-search>
+
+<ng-container *ngIf="searchResults$ | async as searchResults; else noResults">
+  <app-results
+    [searchResults]="searchResults"
+    [currentPage]="currentPage$ | async"
+    (loadNextPage)="onLoadNextPage()"
+    (loadPrevPage)="onLoadPrevPage()"
+  ></app-results>
+</ng-container>
+
+<ng-template #noResults>
+  <app-empty-state
+    [message]="'Type something to search github users'"
+  ></app-empty-state>
+</ng-template>

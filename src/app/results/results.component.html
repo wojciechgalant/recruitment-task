@@ -1,0 +1,16 @@
+<h2>Search Results:</h2>
+<ul>
+  <li *ngFor="let user of searchResults.items">
+    <a [href]="user.html_url" target="_blank">{{ user.login }}</a>
+  </li>
+</ul>
+<div>
+  <button
+    (click)="loadPrevPage.emit()"
+    [disabled]="currentPage === 1"
+  >
+    Previous Page
+  </button>
+  <span>Page {{ currentPage }}</span>
+  <button (click)="loadNextPage.emit()">Next Page</button>
+</div>
